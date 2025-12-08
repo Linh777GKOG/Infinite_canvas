@@ -75,7 +75,7 @@
 #### 4.6 Export SVG
 - Tự build SVG generator từ VectorStroke → xuất file SVG thực sự (không phải rasterize).
 
-### 5. Kế hoạch Phát triển (Timeline chi tiết – 20 tuần)
+### 5. Kế hoạch Phát triển 
 
 | Tuần | Mục tiêu chính                              | Deliverable                            |
 |------|---------------------------------------------|----------------------------------------|
