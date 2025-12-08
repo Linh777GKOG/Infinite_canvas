@@ -1,76 +1,102 @@
-1. Tổng quan Dự án
-Dự án nhằm phát triển một ứng dụng Android lấy cảm hứng từ ứng dụng Concepts – một công cụ vẽ và thiết kế chuyên nghiệp với canvas vô hạn. Ứng dụng sẽ cho phép người dùng vẽ, phác thảo ý tưởng, thiết kế đồ họa trên một không gian canvas không giới hạn kích thước, hỗ trợ zoom, pan mượt mà và các công cụ sáng tạo cơ bản.
-Mục tiêu chính:
-Cung cấp trải nghiệm vẽ tự do, phù hợp cho nghệ sĩ, designer, sinh viên hoặc người dùng sáng tạo.
-Tập trung vào tính di động trên Android, với giao diện thân thiện, hiệu suất cao và tối ưu hóa cho thiết bị cảm ứng.
-Đối tượng người dùng: Người dùng Android từ 18 tuổi trở lên, đặc biệt là những người yêu thích nghệ thuật kỹ thuật số, không cần phần cứng chuyên dụng như bút stylus (nhưng hỗ trợ nếu có).
-Phạm vi: Phiên bản đầu tiên tập trung vào các tính năng cốt lõi, không bao gồm tích hợp đám mây hoặc chia sẻ xã hội. Dự án dự kiến hoàn thành trong 3-6 tháng tùy thuộc vào nguồn lực.
-2. Chức năng
-Ứng dụng sẽ bao gồm các chức năng chính sau, được chia thành nhóm để dễ quản lý:
-Chức năng cốt lõi (Core Features):
-Canvas vô hạn: Người dùng có thể vẽ, di chuyển, zoom in/out mà không bị giới hạn kích thước.
-Công cụ vẽ cơ bản: Bút chì, bút mực, cọ vẽ, tẩy, với tùy chỉnh kích thước, màu sắc và độ mờ.
-Hỗ trợ layer: Thêm/xóa layer, sắp xếp thứ tự, ẩn/hiện layer để quản lý nội dung phức tạp.
-Chức năng tương tác (Interaction Features):
-Gesture hỗ trợ: Pinch-to-zoom, two-finger pan, undo/redo nhanh chóng.
-Chế độ chọn và chỉnh sửa: Chọn vùng vẽ để di chuyển, xoay, scale.
-Hỗ trợ nhập văn bản: Thêm text box với font tùy chỉnh.
-Chức năng phụ trợ (Utility Features):
-Xuất file: Lưu dưới dạng PNG, SVG hoặc PDF.
-Palette màu: Chọn màu từ bảng màu hoặc eyedropper tool.
-Grid và ruler: Hỗ trợ lưới tham chiếu cho vẽ chính xác.
-Chức năng nâng cao (Future Features – Phase 2):
-Tích hợp brush tùy chỉnh, import/export từ các app khác.
-Hỗ trợ stylus với pressure sensitivity (nếu thiết bị hỗ trợ).
-3. Ngôn ngữ và Công cụ
-Ngôn ngữ lập trình: Kotlin, có thể kết hợp Java cho một số module.
-Công cụ phát triển:
-IDE: Android Studio
-UI Framework: Jetpack Compose.
-Thư viện chính:
-Canvas và Graphics: Android Canvas API cho vẽ, kết hợp với Path và Paint classes.
-Gesture Detection: GestureDetector và ScaleGestureDetector cho xử lý chạm.
-Layer Management: Sử dụng SurfaceView hoặc Custom View để render layer.
-Xuất file: Android Bitmap và VectorDrawable cho PNG/SVG.
-Các thư viện bên thứ ba: Glide (cho xử lý hình ảnh), Gson (cho lưu trữ dữ liệu), Room (nếu cần database локальный cho project history).
-Công cụ test: Espresso cho UI test, JUnit cho unit test.
-Quản lý mã nguồn: Git với GitHub hoặc GitLab.
-Yêu cầu môi trường: Android SDK 21+ 
-4. Giải pháp Kỹ thuật
-Triển khai Infinite Canvas:
-Sử dụng Custom View kế thừa từ View hoặc SurfaceView để render canvas. Để xử lý "vô hạn", không tạo bitmap khổng lồ mà sử dụng kỹ thuật tiling: Phân chia canvas thành các tile (ví dụ 1024x1024 pixels), chỉ load và render tile đang hiển thị trên màn hình. Khi zoom/pan, tính toán vị trí và load tile tương ứng để tiết kiệm bộ nhớ.
-Xử lý zoom/pan: Sử dụng Matrix để transform canvas, kết hợp với GestureDetector để phát hiện cử chỉ. Giới hạn zoom từ 0.1x đến 10x để tránh lỗi hiệu suất.
-Quản lý Layer và Vẽ:
-Mỗi layer là một Bitmap riêng biệt, composite chúng khi render. Sử dụng PorterDuff modes cho blending (ví dụ: overlay, multiply).
-Công cụ vẽ: Lưu đường vẽ dưới dạng Path objects, render realtime với anti-aliasing để mượt mà.
-Tối ưu hóa Hiệu suất:
-Off-screen rendering: Vẽ trên Bitmap cache trước khi apply lên màn hình.
-Memory Management: Sử dụng WeakReference cho objects lớn, recycle Bitmap khi không dùng.
-Threading: Sử dụng Handler hoặc Coroutines (Kotlin) để xử lý background tasks như lưu file mà không block UI.
-Bảo mật và Lỗi:
-Xử lý exception cho out-of-memory (OOM) bằng cách giới hạn số layer (tối đa 10).
-Hỗ trợ đa thiết bị: Test trên emulator và real devices với kích thước màn hình khác nhau.
-5. Kế hoạch
-Kế hoạch phát triển được chia thành các giai đoạn theo mô hình Agile, với sprint 2 tuần/lần. Tổng thời gian ước tính: 4 tháng cho MVP (Minimum Viable Product).
-Giai đoạn 1: Chuẩn bị 
-Nghiên cứu và thiết kế: Phân tích Concepts app, vẽ wireframe UI/UX bằng Figma hoặc Adobe XD.
-Thiết lập môi trường: Cài đặt Android Studio, tạo repository Git.
-Đội ngũ: 1-2 developer (Android dev), 1 designer nếu có.
-Giai đoạn 2: Phát triển Core
-Xây dựng canvas cơ bản và gesture handling.
-Triển khai công cụ vẽ và layer.
-Test unit và integration.
-Giai đoạn 3: Phát triển Features Phụ:
-Thêm xuất file, palette màu, grid.
-Tối ưu hóa hiệu suất và fix bug.
-UI polish: Thêm animation mượt mà.
-Giai đoạn 4: Testing và Deploy :
-Test toàn diện: Manual test trên devices, automated test.
-Beta release: Upload lên Google Play Console cho internal testing.
-Fix feedback và release MVP.
-Giai đoạn 5: Bảo trì và Mở rộng (Sau release):
-Theo dõi user feedback qua Google Play.
-Lập kế hoạch update: Thêm features nâng cao trong phase 2.
-Lịch trình chi tiết: Sử dụng Trello hoặc Jira để track tasks. Milestone: Demo prototype cuối giai đoạn 2.
+Dưới đây là phiên bản đã được **chỉnh sửa, hoàn thiện, tối ưu và trình bày chuyên nghiệp hơn** dựa trên nội dung bạn gửi, đồng thời bổ sung một số phần còn thiếu để kế hoạch trở nên đầy đủ, khả thi và có tính thực tiễn cao khi đưa cho đội phát triển hoặc nhà đầu tư.
 
+### 1. Tổng quan Dự án
+**Tên dự án (gợi ý):** InfiniteSketch (hoặc tên bạn tự chọn)  
+**Mô tả ngắn gọn:** Ứng dụng vẽ phác thảo và thiết kế vector-based với canvas vô hạn dành riêng cho Android, lấy cảm hứng trực tiếp từ Concepts (iOS/Windows). Tập trung vào trải nghiệm mượt mà, hiệu suất cao trên mọi thiết bị Android, kể cả máy tầm trung.
 
+**Mục tiêu chính:**
+- Tạo ra một công cụ vẽ tự do mạnh mẽ, không giới hạn không gian sáng tạo.
+- Đạt hiệu suất 60 FPS ngay cả khi zoom sâu hoặc có hàng nghìn nét vẽ.
+- Hỗ trợ tốt bút stylus (Samsung S Pen, Lenovo, Huawei…) với pressure & tilt sensitivity.
+- MVP ra mắt trong vòng 4–5 tháng.
+
+**Đối tượng người dùng:**
+- Nghệ sĩ kỹ thuật số, UI/UX designer, kiến trúc sư, sinh viên mỹ thuật, người ghi chú ý tưởng.
+- Người dùng Android 18–45 tuổi, ưu tiên tablet và điện thoại màn hình lớn.
+
+**Phạm vi MVP (v1.0):**
+- Canvas vô hạn + layer + công cụ vẽ cơ bản + xuất PNG/SVG/PDF.
+- Không bao gồm: cloud sync, cộng tác real-time, marketplace brush.
+
+### 2. Chức năng (Features)
+
+| Nhóm                  | Tính năng MVP (Phase 1)                                | Phase 2 (Sau 6 tháng)                          |
+|-----------------------|--------------------------------------------------------|-------------------------------------------------|
+| Canvas                | Canvas vô hạn, zoom 10–10000%, pan mượt               | Snap to grid, perspective grid                 |
+| Công cụ vẽ            | Bút chì, bút mực, cọ mềm, tẩy, fill, eyedropper       | Brush tùy chỉnh, import .abr, vector shapes    |
+| Layer & Tổ chức       | Tối đa 15 layer, blend mode cơ bản, nhóm layer        | Layer mask, adjustment layer                   |
+| Tương tác             | Pinch-zoom, 2-finger pan, quick undo/redo (30 bước)   | Lasso + transform tool, symmetry drawing       |
+| Văn bản & Shape       | Text tool + basic shapes (line, rectangle, circle)    | Editable vector shapes, boolean operations     |
+| Xuất & Lưu            | Lưu project (.isketch), xuất PNG, SVG, PDF            | Export PSD, share link, cloud backup           |
+| Hỗ trợ Stylus         | Pressure + tilt (Samsung, EMR, AES)                    | Palm rejection nâng cao, hover preview         |
+| Giao diện             | Toolbar thu gọn, HUD điều khiển, dark mode            | Customizable toolbar, gesture shortcuts        |
+
+### 3. Ngôn ngữ và Công cụ
+
+| Thành phần            | Công nghệ lựa chọn (2025)                              | Lý do chọn                                      |
+|-----------------------|--------------------------------------------------------|--------------------------------------------------|
+| Ngôn ngữ              | 100% Kotlin                                            | Hiện đại, null-safety, coroutines                |
+| IDE                   | Android Studio Koala / Meerkat                         | Hỗ trợ Compose tốt nhất                          |
+| UI Framework          | Jetpack Compose + Material 3                           | Responsive, dễ animate, hỗ trợ tablet tốt        |
+| Render Engine         | Custom View (Compose Canvas) + OpenGL fallback         | Hiệu suất cao hơn View cũ                        |
+| Vector Drawing        | Path + PathMeasure + tự build vector engine            | Kiểm soát hoàn toàn, tiết kiệm RAM               |
+| Lưu trữ project       | Room Database + Protocol Buffers (.proto)              | Nhanh, binary, dễ mở rộng                        |
+| Thư viện phụ          | Coil (image), Accompanist (system UI), Hilt/Dagger    | Nhẹ, hiện đại                                    |
+| Quản lý dự án         | Git + GitHub Actions + Jira/Trello                     | CI/CD tự động                                    |
+| Target SDK            | minSdk 24 (Android 7) → targetSdk 35                   | Phủ 98% thiết bị hiện tại                        |
+
+### 4. Giải pháp Kỹ thuật (Chi tiết thực tế)
+
+#### 4.1 Infinite Canvas Engine
+- Không dùng Bitmap lớn → dùng Quad-tree + Tiling 512×512 hoặc 1024×1024.
+- Mỗi tile là một Picture (Skia) hoặc Compose Canvas snapshot.
+- Chỉ render các tile nằm trong viewport + 1 lớp buffer xung quanh.
+- Khi zoom < 30% → tự động chuyển sang low-res tile để tiết kiệm RAM.
+
+#### 4.2 Vector-based Strokes (giống Concepts)
+- Mỗi nét vẽ là một VectorStroke object gồm danh sách điểm (x, y, pressure, tilt, time).
+- Sử dụng Catmull-Rom spline hoặc tự build simplified polyline để làm mượt.
+- Render bằng Compose Canvas + Shader (độ dày thay đổi theo pressure).
+
+#### 4.3 Layer System
+- Mỗi layer chứa danh sách VectorStroke + optional Raster cache.
+- Khi zoom > 200% → render vector, khi zoom xa → dùng cache bitmap để tăng tốc.
+- Composite bằng Canvas.drawPicture() hoặc RenderNode (API 29+).
+
+#### 4.4 Undo/Redo
+- Command Pattern + tối đa 50 bước.
+- Lưu diff thay vì toàn bộ state → tiết kiệm bộ nhớ.
+
+#### 4.5 Stylus Support
+- Sử dụng MotionEvent.TOOL_TYPE_STYLUS + getAxisValue(AXIS_PRESSURE, AXIS_TILT).
+- Samsung S Pen: bật Pointer Icon và hover preview.
+
+#### 4.6 Export SVG
+- Tự build SVG generator từ VectorStroke → xuất file SVG thực sự (không phải rasterize).
+
+### 5. Kế hoạch Phát triển (Timeline chi tiết – 20 tuần)
+
+| Tuần | Mục tiêu chính                              | Deliverable                            |
+|------|---------------------------------------------|----------------------------------------|
+| 1–2  | Nghiên cứu + UI/UX Design                   | Wireframe, Design system (Figma)       |
+| 3–5  | Core Canvas Engine + Gesture                | Infinite zoom/pan hoạt động mượt       |
+| 6–8  | Vector Brush Engine + Pressure              | Vẽ được nét đẹp, hỗ trợ stylus         |
+| 9–11 | Layer System + Undo/Redo                    | Đa layer, blend mode cơ bản            |
+| 12–14| Toolbar, Color Picker, Basic Tools          | Giao diện hoàn chỉnh                   |
+| 15–16| Export PNG/SVG/PDF + Project Save           | Lưu và mở file                         |
+| 17–18| Tối ưu hiệu suất + Test trên 20+ devices    | 60 FPS trên máy yếu                    |
+| 19   | Closed Beta (100 testers)                   | Thu thập feedback                      |
+| 20   | Fix bug + Release v1.0 lên Google Play      | Official launch                        |
+
+### 6. Đội ngũ đề xuất (dành cho startup nhỏ)
+- 1 Android Developer chính (Kotlin + Compose)
+- 1 UI/UX Designer (part-time)
+- 1 Tester / QA (part-time tuần cuối)
+- Bạn (Product Owner)
+
+### 7. Dự toán chi phí (nếu thuê ngoài tại Việt Nam 2025)
+- Developer senior: 35–50 triệu/tháng × 5 tháng ≈ 200 triệu
+- Designer: 15–20 triệu
+- Tổng ≈ 230–280 triệu VND cho MVP hoàn chỉnh
+
+Kế hoạch trên đã được tinh chỉnh để **thực tế, khả thi và có thể triển khai ngay**. Nếu bạn muốn mình xuất file .docx hoặc .pdf đẹp để trình investor, hoặc muốn bắt đầu code phần Canvas Engine trước, cứ nói nhé!
