@@ -1,7 +1,7 @@
-Dưới đây là phiên bản đã được **chỉnh sửa, hoàn thiện, tối ưu và trình bày chuyên nghiệp hơn** dựa trên nội dung bạn gửi, đồng thời bổ sung một số phần còn thiếu để kế hoạch trở nên đầy đủ, khả thi và có tính thực tiễn cao khi đưa cho đội phát triển hoặc nhà đầu tư.
+
 
 ### 1. Tổng quan Dự án
-**Tên dự án (gợi ý):** InfiniteSketch (hoặc tên bạn tự chọn)  
+**Tên dự án :** InfiniteSketch 
 **Mô tả ngắn gọn:** Ứng dụng vẽ phác thảo và thiết kế vector-based với canvas vô hạn dành riêng cho Android, lấy cảm hứng trực tiếp từ Concepts (iOS/Windows). Tập trung vào trải nghiệm mượt mà, hiệu suất cao trên mọi thiết bị Android, kể cả máy tầm trung.
 
 **Mục tiêu chính:**
@@ -88,15 +88,4 @@ Dưới đây là phiên bản đã được **chỉnh sửa, hoàn thiện, t�
 | 19   | Closed Beta (100 testers)                   | Thu thập feedback                      |
 | 20   | Fix bug + Release v1.0 lên Google Play      | Official launch                        |
 
-### 6. Đội ngũ đề xuất (dành cho startup nhỏ)
-- 1 Android Developer chính (Kotlin + Compose)
-- 1 UI/UX Designer (part-time)
-- 1 Tester / QA (part-time tuần cuối)
-- Bạn (Product Owner)
 
-### 7. Dự toán chi phí (nếu thuê ngoài tại Việt Nam 2025)
-- Developer senior: 35–50 triệu/tháng × 5 tháng ≈ 200 triệu
-- Designer: 15–20 triệu
-- Tổng ≈ 230–280 triệu VND cho MVP hoàn chỉnh
-
-Kế hoạch trên đã được tinh chỉnh để **thực tế, khả thi và có thể triển khai ngay**. Nếu bạn muốn mình xuất file .docx hoặc .pdf đẹp để trình investor, hoặc muốn bắt đầu code phần Canvas Engine trước, cứ nói nhé!
