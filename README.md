@@ -1,7 +1,7 @@
 
 
 ### 1. Tổng quan Dự án
-**Tên dự án :** InfiniteSketch 
+**Tên dự án :** Infinite Canvas.
 **Mô tả ngắn gọn:** Ứng dụng vẽ phác thảo và thiết kế vector-based với canvas vô hạn dành riêng cho Android, lấy cảm hứng trực tiếp từ Concepts (iOS/Windows). Tập trung vào trải nghiệm mượt mà, hiệu suất cao trên mọi thiết bị Android, kể cả máy tầm trung.
 
 **Mục tiêu chính:**
