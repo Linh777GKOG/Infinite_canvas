@@ -9,7 +9,7 @@
 - Tạo ra một công cụ vẽ tự do mạnh mẽ, không giới hạn không gian sáng tạo.
 - Đạt hiệu suất 60 FPS ngay cả khi zoom sâu hoặc có hàng nghìn nét vẽ.
 - Hỗ trợ tốt bút stylus (Samsung S Pen, Lenovo, Huawei…) với pressure & tilt sensitivity.
-- MVP ra mắt trong vòng 4–5 tháng.
+- ra mắt trong vòng 4–5 tháng.
 
 **Đối tượng người dùng:**
 - Nghệ sĩ kỹ thuật số, UI/UX designer, kiến trúc sư, sinh viên mỹ thuật, người ghi chú ý tưởng.
